@@ -14,6 +14,7 @@ mongoose.connect(
   () => console.log("Connected to MongoDB")
 );
 
+app.use("/auth", require("./routes/auth"));
 app.use("/courses", require("./routes/courses"));
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

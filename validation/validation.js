@@ -9,4 +9,17 @@ const addCourseValidation = data => {
   return schema.validate(data);
 };
 
+const loginValidation = data => {
+  const schema = Joi.object({
+    username: Joi.string()
+      .required()
+      .min(4),
+    password: Joi.string()
+      .required()
+      .min(4)
+  });
+  return schema.validate(data);
+};
+
 module.exports.addCourseValidation = addCourseValidation;
+module.exports.loginValidation = loginValidation;

@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Course = require("../models/Course");
 const { addCourseValidation } = require("../validation/validation");
 const string_to_slug = require("../helpers/slugify");
+const verifyToken = require("../middleware/verifyToken");
 
 router.get("/", async (req, res) => {
   try {
@@ -22,7 +23,7 @@ router.get("/:slug", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   const { error } = addCourseValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -46,7 +47,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyToken, async (req, res) => {
   const { error } = addCourseValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -74,9 +75,9 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verifyToken, async (req, res) => {
   try {
-    const result = Course.findByIdAndDelete(req.params.id);
+    const result = await Course.findByIdAndDelete(req.params.id);
     res.send("Course deleted");
   } catch (err) {
     res.status(400).send(err);
