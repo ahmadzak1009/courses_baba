@@ -14,8 +14,8 @@ router.post("/login", async (req, res) => {
   const cekPassword = await bcrypt.compare(req.body.password, admin.password);
   if (!cekPassword) return res.status(400).send("Password incorrect");
 
-  const token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY);
-  res.header("Athorization", `Bearer ${token}`).send(token);
+  const token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY, { expiresIn: "1h" });
+  res.header("Authorization", `Bearer ${token}`).send(token);
 });
 
 router.post("/register", async (req, res) => {
