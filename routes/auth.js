@@ -3,19 +3,20 @@ const Admin = require("../models/Admin");
 const { loginValidation } = require("../validation/validation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const verifyToken = require("../middleware/verifyToken");
 
 router.post("/login", async (req, res) => {
   const { error } = loginValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.send(error.details[0].message);
 
   const admin = await Admin.findOne({ username: req.body.username });
-  if (!admin) return res.status(404).send("username not found");
+  if (!admin) return res.send("username not found");
 
   const cekPassword = await bcrypt.compare(req.body.password, admin.password);
-  if (!cekPassword) return res.status(400).send("Password incorrect");
+  if (!cekPassword) return res.send("password incorrect");
 
   const token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY, { expiresIn: "1h" });
-  res.header("Authorization", `Bearer ${token}`).send(token);
+  res.header("Authorization", `Bearer ${token}`).json({ token });
 });
 
 router.post("/register", async (req, res) => {
@@ -31,6 +32,10 @@ router.post("/register", async (req, res) => {
   } catch (err) {
     res.status(400).send(err);
   }
+});
+
+router.get("/cek-token", verifyToken, (req, res) => {
+  res.send("you are logged in");
 });
 
 module.exports = router;

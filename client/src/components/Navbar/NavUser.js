@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, IconButton, Link, makeStyles, Box } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { AdminContext } from "../../AdminContext";
+import LoginDialog from "../dialogs/LoginDialog";
 
 const NavUser = props => {
+  const { admin, handleOpenLoginDialog, handleLogout } = useContext(AdminContext);
+
   const useStyles = makeStyles(theme => ({
     techFor: {
       "&:hover": {
@@ -22,10 +26,24 @@ const NavUser = props => {
         <IconButton color="inherit">
           <ShoppingCartIcon />
         </IconButton>
-        <Button color="inherit">Login</Button>
-        <Button color="inherit" variant="outlined">
-          Sign Up
-        </Button>
+        {admin ? (
+          <>
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
+            </Button>
+            <Button color="inherit" variant="outlined">
+              Add Course
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button color="inherit">Sign Up</Button>
+            <Button color="inherit" variant="outlined" onClick={handleOpenLoginDialog}>
+              Login
+            </Button>
+            <LoginDialog />
+          </>
+        )}
       </Box>
     </>
   );

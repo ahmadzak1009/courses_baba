@@ -3,11 +3,14 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { CourseProvider } from "./CourseContext";
+import { AdminProvider } from "./AdminContext";
 
 ReactDOM.render(
-  <CourseProvider>
-    <App />
-  </CourseProvider>,
+  <AdminProvider>
+    <CourseProvider>
+      <App />
+    </CourseProvider>
+  </AdminProvider>,
   document.getElementById("root")
 );
 
