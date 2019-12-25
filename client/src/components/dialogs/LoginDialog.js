@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { AdminContext } from "../../AdminContext";
 
-const LoginModal = props => {
+const LoginDialog = props => {
   const { loginDialog, handleCloseLoginDialog, tryLogin } = useContext(AdminContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -78,4 +78,4 @@ const LoginModal = props => {
   );
 };
 
-export default LoginModal;
+export default LoginDialog;

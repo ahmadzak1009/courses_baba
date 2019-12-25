@@ -3,6 +3,7 @@ const Course = require("../models/Course");
 const { addCourseValidation } = require("../validation/validation");
 const string_to_slug = require("../helpers/slugify");
 const verifyToken = require("../middleware/verifyToken");
+const path = require("path");
 
 router.get("/", async (req, res) => {
   try {
@@ -31,9 +32,18 @@ router.post("/", verifyToken, async (req, res) => {
   const cekSlug = await Course.findOne({ slug: slug });
   if (cekSlug) slug += Date.now();
 
+  const image = req.files.file;
+
+  try {
+    await image.mv(path.join(__dirname, `../client/public/img/${image.name}`));
+  } catch (err) {
+    res.status(500).send(err);
+  }
+
   const newCourse = new Course({
     title: req.body.title,
     price: req.body.price,
+    duration: req.body.duration,
     description: req.body.description,
     image: req.body.image,
     slug: slug

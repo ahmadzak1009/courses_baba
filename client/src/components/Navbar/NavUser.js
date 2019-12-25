@@ -3,9 +3,12 @@ import { Button, IconButton, Link, makeStyles, Box } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { AdminContext } from "../../AdminContext";
 import LoginDialog from "../dialogs/LoginDialog";
+import AddDialog from "../dialogs/AddDialog";
+import { CourseContext } from "../../CourseContext";
 
 const NavUser = props => {
   const { admin, handleOpenLoginDialog, handleLogout } = useContext(AdminContext);
+  const { openAddDialog } = useContext(CourseContext);
 
   const useStyles = makeStyles(theme => ({
     techFor: {
@@ -31,9 +34,10 @@ const NavUser = props => {
             <Button color="inherit" onClick={handleLogout}>
               Logout
             </Button>
-            <Button color="inherit" variant="outlined">
+            <Button color="inherit" variant="outlined" onClick={openAddDialog}>
               Add Course
             </Button>
+            <AddDialog />
           </>
         ) : (
           <>

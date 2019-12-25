@@ -4,7 +4,10 @@ const addCourseValidation = data => {
   const schema = Joi.object({
     title: Joi.string().required(),
     price: Joi.number().required(),
-    description: Joi.string().required()
+    duration: Joi.string().required(),
+    description: Joi.string().required(),
+    file: Joi.any(),
+    image: Joi.string()
   });
   return schema.validate(data);
 };

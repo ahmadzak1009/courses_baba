@@ -12,7 +12,8 @@ import {
 const CourseItem = props => {
   const useStyles = makeStyles(theme => ({
     title: {
-      fontWeight: "700"
+      fontWeight: "700",
+      fontSize: "14px"
     },
     price: {
       fontWeight: "700",
@@ -22,25 +23,29 @@ const CourseItem = props => {
 
   const classes = useStyles();
 
+  const { image, title, price, duration } = props.course;
+
   return (
     <>
       <Grid item xs={3}>
         <Card>
           <CardActionArea>
-            <CardMedia
-              image="/img/course-laravel.webp"
-              title="Course Laravel"
-              style={{ height: "190px" }}
-            />
+            <CardMedia image={`/img/${image}`} title={title} style={{ height: "190px" }} />
             <CardContent>
-              <Typography gutterBottom variant="h6" color="primary" className={classes.title}>
-                Lizard
+              <Typography
+                gutterBottom
+                variant="body1"
+                component="h3"
+                color="primary"
+                className={classes.title}
+              >
+                {title}
               </Typography>
               <Typography gutterBottom variant="body2" color="textSecondary" component="p">
-                Lizards are a widespread group of squamate reptiles.
+                Total durasi video kursus {duration}
               </Typography>
               <Typography gutterBottom varian="h4" color="primary" className={classes.price}>
-                Rp. 500.000
+                Rp. {price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&.")}
               </Typography>
             </CardContent>
           </CardActionArea>

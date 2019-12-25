@@ -7,7 +7,7 @@ const courseSchema = new Schema(
     price: { type: Number, required: true },
     description: { type: String, required: true },
     duration: { type: String, required: true },
-    image: { type: String, default: "course_default.jpg" },
+    image: { type: String, default: "course-default.webp" },
     slug: { type: String, required: true, unique: true }
   },
   {

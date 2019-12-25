@@ -8,13 +8,27 @@ export const AdminProvider = props => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+
+    const source = axios.CancelToken.source();
     if (token) {
       axios
-        .get("/auth/cek-token", { headers: { Authorization: `Bearer ${token}` } })
+        .get("/auth/cek-token", {
+          headers: { Authorization: `Bearer ${token}` },
+          cancelToken: source.token
+        })
         .then(res => res.data)
         .then(data => setAdmin(true))
-        .catch(err => setAdmin(false));
+        .catch(err => {
+          setAdmin(false);
+          if (axios.isCancel(err)) {
+            console.log("cancelled");
+          } else {
+            throw err;
+          }
+        });
     }
+
+    return () => source.cancel();
   }, [setAdmin]);
 
   // Admin Login
