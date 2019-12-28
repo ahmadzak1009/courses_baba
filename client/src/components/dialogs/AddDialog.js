@@ -7,7 +7,8 @@ import {
   Button,
   TextField,
   IconButton,
-  Box
+  Box,
+  Snackbar
 } from "@material-ui/core";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { CourseContext } from "../../CourseContext";
