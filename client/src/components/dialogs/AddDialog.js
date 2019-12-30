@@ -7,11 +7,11 @@ import {
   Button,
   TextField,
   IconButton,
-  Box,
-  Snackbar
+  Box
 } from "@material-ui/core";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { CourseContext } from "../../CourseContext";
+import { withSnackbar } from "notistack";
 
 const AddDialog = props => {
   const { addDialog, closeAddDialog, addCourse } = useContext(CourseContext);
@@ -34,7 +34,10 @@ const AddDialog = props => {
     };
 
     const res = await addCourse(data);
-    if (res === "err") return window.alert("Add New Course Failed");
+    if (res === "err")
+      return props.enqueueSnackbar("Add Course Failed", {
+        variant: "error"
+      });
 
     setTitle("");
     setPrice("");
@@ -43,6 +46,7 @@ const AddDialog = props => {
     setFileName("");
     setFile(null);
     closeAddDialog();
+    props.enqueueSnackbar("Successfully Added Course", { variant: "success" });
   };
 
   return (
@@ -113,4 +117,4 @@ const AddDialog = props => {
   );
 };
 
-export default AddDialog;
+export default withSnackbar(AddDialog);

@@ -8,6 +8,7 @@ import {
   Button
 } from "@material-ui/core";
 import { AdminContext } from "../../AdminContext";
+import { withSnackbar } from "notistack";
 
 const LoginDialog = props => {
   const { loginDialog, handleCloseLoginDialog, tryLogin } = useContext(AdminContext);
@@ -34,6 +35,9 @@ const LoginDialog = props => {
     setUserError(false);
     setPassError(false);
     handleCloseLoginDialog();
+    props.enqueueSnackbar("You're Logged In", {
+      variant: "success"
+    });
   };
 
   return (
@@ -78,4 +82,4 @@ const LoginDialog = props => {
   );
 };
 
-export default LoginDialog;
+export default withSnackbar(LoginDialog);

@@ -5,11 +5,14 @@ import Footer from "./components/Footer";
 import Jumbotron from "./components/Jumbotron";
 // import Liputan from "./components/Liputan";
 import CourseList from "./components/courses/CourseList";
+import { SnackbarProvider } from "notistack";
 
 function App() {
   return (
     <>
-      <Navbar />
+      <SnackbarProvider maxSnack={3} preventDuplicate>
+        <Navbar />
+      </SnackbarProvider>
 
       <Jumbotron />
       {/* <Liputan /> */}
